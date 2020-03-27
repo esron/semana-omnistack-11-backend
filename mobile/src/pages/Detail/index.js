@@ -1,7 +1,15 @@
 import React from 'react';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { View, Image, Touchable, TouchableOpacity, Text } from 'react-native';
+import {
+  View,
+  Image,
+  Touchable,
+  TouchableOpacity,
+  Text,
+  Linking,
+} from 'react-native';
+import * as MailComposer from 'expo-mail-composer';
 
 import logoImg from '../../assets/logo.png';
 
@@ -9,6 +17,19 @@ import styles from './styles';
 
 export default function Detail() {
   const navigator = useNavigation();
+  const message = 'Olá APAD, estou entrando em contato pois gostaria de ajudar no caso "Cadelinha atropelada" com o valor de R$ 120,00';
+
+  function sedMail() {
+    MailComposer.composeAsync({
+      subject: 'Herói do caso: Cadelinha atropelada',
+      recipients: ['esron@gmail.com'],
+      body: message,
+    })
+  }
+
+  function sedWhatsapp() {
+    Linking.openURL(`whatsapp://send?phone=5574991166571&text=${message}`);
+  }
 
   return (
     <View style={styles.container}>
@@ -43,13 +64,13 @@ export default function Detail() {
         <View style={styles.actions}>
           <TouchableOpacity
             style={styles.action}
-            onPress={() => {}}
+            onPress={sedWhatsapp}
           >
             <Text style={styles.actionText}>WhatsApp</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.action}
-            onPress={() => {}}
+            onPress={sedMail}
           >
             <Text style={styles.actionText}>E-mail</Text>
           </TouchableOpacity>
